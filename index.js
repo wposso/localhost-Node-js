@@ -25,7 +25,7 @@ const dbConfig = {
     user: 'dobleu',
     password: 'Medellin2025.',
     server: 'cloudmovile.database.windows.net',
-    databse: 'Node js',
+    database: 'Node js',
     options: {
         encrypt: true,
         trustServerCertificate: true,
