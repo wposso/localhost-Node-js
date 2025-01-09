@@ -6,7 +6,7 @@ const mssql = require('mssql');
 router.get('/', async (req, res) => {
     try {
         const pool = req.db;
-        const result = await pool.request().query('SELECT * FROM Login');
+        const result = await pool.request().query('SELECT * FROM dbo.Login');
         res.json(result.recordset);
     } catch (err) {
         console.error(err);
