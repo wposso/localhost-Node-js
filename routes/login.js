@@ -40,5 +40,25 @@ router.get('/', async (req, res) => {
 //     }
 // });
 
+router.post('/', async (req, res) => {
+    const { id } = req.body;
+
+    if (!id) {
+        return res.status(400).send('El ID no puede ser null')
+    }
+    try {
+        const pool = req.db;
+        const result = await pool.request()
+            .input('UserId', mssql.Int, id)
+            .execute('SP_SINGIN');
+
+        console.log('Usuario logueado', result);
+        res.json({ message: 'Usuario logueado exitosamente' });
+    } catch (err) {
+        console.err('Error al ejecutar SP_SINGIN');
+        res.status(500).send('Error al loguearse');
+    }
+});
+
 
 module.exports = router;
