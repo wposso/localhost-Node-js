@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
 //     }
 // });
 
-router.post('/', async (req, res) => {
+router.put('/', async (req, res) => {
     const { id } = req.body;
 
     if (!id) {
