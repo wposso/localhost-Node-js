@@ -63,6 +63,9 @@ app.use((req, res, next) => {
 const loginRoutes = require('./routes/login');
 app.use('/login', loginRoutes);
 
+const userdata = require('./routes/userdata');
+app.use('/userdata', userdata);
+
 app.listen(port, () => {
     console.log(`Servidor ejecutándose en http://localhost:${port}`);
 });
