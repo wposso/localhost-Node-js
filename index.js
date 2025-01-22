@@ -10,6 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 // const dbConfig = {
 //     user: 'sa',
 //     password: 'masterkey',
@@ -29,7 +30,15 @@ const dbConfig = {
     options: {
         encrypt: true,
         trustServerCertificate: true,
-    }
+    },
+
+    pool: {
+        max: 10,
+        min: 0,
+        idleTimeoutMillis: 30000,
+    },
+    requestTimeout: 60000,
+    connectionTimeout: 30000,
 }
 
 let dbPool;
