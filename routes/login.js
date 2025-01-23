@@ -52,7 +52,7 @@ router.put('/', async (req, res) => {
     try {
         const pool = req.db;
         const result = await pool.request()
-            .input('UserId', mssql.Int, id)
+            .input('Id', mssql.Int, id)
             .execute('SP_SINGIN');
 
         console.log('Usuario logueado:', result);
