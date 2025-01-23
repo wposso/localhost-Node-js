@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mssql = require('mssql');
 
-router.get('/', async (req, res) => {
+router.get('/getuser', async (req, res) => {
     try {
         const pool = req.db;
         const result = await pool.request().query('SELECT * FROM dbo.Login');
@@ -40,8 +40,7 @@ router.get('/', async (req, res) => {
 //     }
 // });
 
-router.put('/', async (req, res) => {
-    console.log('Cuerpo recibido en PUT /login:', req.body);
+router.put('/singin', async (req, res) => {
 
     const { id } = req.body;
 
@@ -58,7 +57,7 @@ router.put('/', async (req, res) => {
         console.log('Usuario logueado:', result);
         res.json({ message: 'Usuario logueado exitosamente' });
     } catch (err) {
-        console.error('Error al ejecutar SP_SINGIN:', err.message, err.stack);
+        console.error(err);
         res.status(500).send('Error al loguearse');
     }
 });
