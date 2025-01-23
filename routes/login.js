@@ -41,24 +41,28 @@ router.get('/', async (req, res) => {
 // });
 
 router.put('/', async (req, res) => {
+    console.log('Cuerpo recibido en PUT /login:', req.body);
+
     const { id } = req.body;
 
     if (!id) {
-        return res.status(400).send('El ID no puede ser null')
+        return res.status(400).send('El ID no puede ser null');
     }
+
     try {
         const pool = req.db;
         const result = await pool.request()
             .input('UserId', mssql.Int, id)
             .execute('SP_SINGIN');
 
-        console.log('Usuario logueado', result);
+        console.log('Usuario logueado:', result);
         res.json({ message: 'Usuario logueado exitosamente' });
     } catch (err) {
-        console.err('Error al ejecutar SP_SINGIN');
+        console.error('Error al ejecutar SP_SINGIN:', err.message, err.stack);
         res.status(500).send('Error al loguearse');
     }
 });
+
 
 
 module.exports = router;
