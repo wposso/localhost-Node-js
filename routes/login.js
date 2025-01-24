@@ -65,6 +65,32 @@ router.put('/singin/:id', async (req, res) => {
     }
 });
 
+router.put('/logout/:id', async (req, res) => {
+
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).send('El ID no puede ser null');
+    }
+
+    try {
+        const pool = req.db;
+        const result = await pool.request()
+            .input('Id', mssql.Int, id)
+            .execute('SP_LOGOUT');
+
+        if (result.rowsAffected[0] > 0) {
+            res.statusCode(200).json({ message: 'Usuario cerró sesión con éxito' });
+        }
+        else {
+            res.statusCode(404).json({ message: 'Usuario no encontrado' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.statusCode(500).json({ message: 'Error al cerrar sesión' });
+    }
+});
+
 
 
 module.exports = router;
