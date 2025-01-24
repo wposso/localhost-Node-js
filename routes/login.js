@@ -40,9 +40,9 @@ router.get('/getuser', async (req, res) => {
 //     }
 // });
 
-router.put('/singin', async (req, res) => {
+router.put('/singin/:id', async (req, res) => {
 
-    const { id } = req.body;
+    const { id } = req.params;
 
     if (!id) {
         return res.status(400).send('El ID no puede ser null');
@@ -54,11 +54,14 @@ router.put('/singin', async (req, res) => {
             .input('Id', mssql.Int, id)
             .execute('SP_SINGIN');
 
-        console.log('Usuario logueado:', result);
-        res.json({ message: 'Usuario logueado exitosamente' });
+        if (result.rowsAffected[0] > 0) {
+            res.status(200).json({ message: 'Usuario logueado exitosamente' });
+        } else {
+            res.status(404).json({ message: 'Usuario no encontrado' });
+        }
     } catch (err) {
         console.error(err);
-        res.status(500).send('Error al loguearse');
+        res.status(500).json({ message: 'Error al loguearse' });
     }
 });
 
